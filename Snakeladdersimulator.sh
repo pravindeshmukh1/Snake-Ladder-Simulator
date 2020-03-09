@@ -19,10 +19,17 @@ function getNumber()
       diceCount=$(($diceCount + 1))
       echo " Dice:- "$dice
    }
-
+function switchPlayer(){
+	if [ $player -eq 2 ]
+	then
+		player=1
+	else
+		player=2
+	fi
+}
 
 function checkOption() {
-
+	switchPlayer
    option=$((1+RANDOM%3))
    case $option in
    $NO_PLAY)playerPosition=$playerPosition
@@ -51,8 +58,9 @@ function checkWin() {
       checkOption
       fi
       done
+		echo "player $player Win"
 
-      if [[ $playerPosition == $END_POSITION ]]
+	   if [[ $playerPosition == $END_POSITION ]]
       then
       echo "WIN"
       fi
