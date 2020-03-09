@@ -4,52 +4,57 @@ echo "welcome Snake & Ladder Simulator"
 
 #constant
 START_POSITION=0
+END_POSITION=100
 
 NO_PLAY=0
 LADDER=1
 SNAKE=2
 
 playerPosition=0
-endPosition=10
+
+diceCount=0
+function getNumber()
+	{
+		dice=$((1+RANDOM%6))
+		diceCount=$(($diceCount + 1))
+		echo " Dice:- "$dice
+	}
 
 
-function getNumber() {
-	rno=$((RANDOM%6+1))
-	echo $rno
+function checkOption() {
+
+	option=$((1+RANDOM%3))
+	case $option in
+	$NO_PLAY)playerPosition=$playerPosition
+	;;
+	$LADDER)playerPosition=$(($playerPosition + $dice))
+	;;
+	$SNAKE)playerPosition=$(( $playerPosition - $dice))
+			if [[ $playerPosition -lt 0 ]]
+			then
+			playerPosition=0
+			fi
+			;;
+	esac
+		echo "player Position" $playerPosition "Dice count" $diceCount
 }
-getNumber
 
-function getExactPosition() {
+function checkWin() {
 
-	if [ $playerPosition -lt $START_POSITION ]
-	then
-		playerPosition=$START_POSITION
-	fi
-
-	if [ $playerPosition -gt $endPosition ]
-	then
-		playerPosition=$((playerPosition-$rno))
-	fi
-}
-
-function checkOption () {
-
-	while [[ $playerPosition -lt $endPosition ]]
+	while [[ $playerPosition -lt $END_POSITION ]]
 	do
-		choice=$((RANDOM%3))
-		case $choice in
-			$NO_PLAY) playerPosition=0 ;;
-			$LADDER) playerPosition=$(( $playerPosition+$rno )) ;;
+		getNumber
+		if [[ $(($playerPosition + $dice)) -gt 100 ]]
+		then
+		playerPosition=$playerPosition
+		else
+		checkOption
+		fi
+		done
 
-			$SNAKE) if [[ $playerposition -lt 0 ]]
-					  then
-					  		playerPosition=0
-				  	  else
-							playerPosition=$(( $playerPositon-$rno ))
-					  fi ;;
-		esac
-		getExactPosition
-	done
-		echo "Player Position:- " $playerPosition
+		if [[ $playerPosition == $END_POSITION ]]
+		then
+		echo "WIN"
+		fi
 }
-checkOption
+checkWin
