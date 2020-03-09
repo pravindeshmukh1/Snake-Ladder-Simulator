@@ -1,3 +1,4 @@
+
 #!/bin/bash -x
 
 echo "welcome Snake & Ladder Simulator"
@@ -10,7 +11,7 @@ LADDER=1
 SNAKE=2
 
 playerPosition=0
-
+endPosition=100
 
 function getNumber() {
 	rno=$((RANDOM%6+1))
@@ -19,12 +20,21 @@ function getNumber() {
 getNumber
 
 function checkOption () {
-		choice=$((RANDOM%3))
+
+while [[ $playerPosition -lt $endPosition ]]
+do
+	choice=$((RANDOM%3))
 	case $choice in
 		$NO_PLAY) playerPosition=$(($playerPosition+0)) ;;
-		$LADDER)	playerPosition=$(( $playerPosition+$rno )) ;;
-		$SNAKE) playerPosition=$(( $playerPositon-$rno )) ;;
+		$LADDER) playerPosition=$(( $playerPosition+$rno )) ;;
+		$SNAKE) if [[ $playerposition -lt 0 ]]
+				  then
+						playerPosition=0
+				  else
+						playerPosition=$(( $playerPositon-$rno ))
+				  fi ;;
 	esac
+done
 		echo $playerPosition
 }
 checkOption
