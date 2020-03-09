@@ -12,6 +12,7 @@ SNAKE=2
 playerPosition=0
 endPosition=10
 
+
 function getNumber() {
 	rno=$((RANDOM%6+1))
 	echo $rno
@@ -49,6 +50,6 @@ function checkOption () {
 		esac
 		getExactPosition
 	done
-		echo $playerPosition
+		echo "Player Position:- " $playerPosition
 }
 checkOption
