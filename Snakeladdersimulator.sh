@@ -11,13 +11,13 @@ LADDER=1
 SNAKE=2
 
 playerPosition=0
-
 diceCount=0
+
 function getNumber() {
-		dice=$((1+RANDOM%6))
-		diceCount=$(($diceCount + 1))
-		echo " Dice:- "$dice
-	}
+	dice=$((1+RANDOM%6))
+	diceCount=$(($diceCount + 1))
+	echo " Dice:- "$dice	
+}
 
 function switchPlayer(){
 	if [ $player -eq 2 ]
@@ -29,22 +29,21 @@ function switchPlayer(){
 }
 
 function checkOption() {
-	switchPlayer
+   switchPlayer
    option=$((1+RANDOM%3))
    case $option in
    $NO_PLAY)playerPosition=$playerPosition
-   ;;
+   	    ;;
    $LADDER)playerPosition=$(($playerPosition + $dice))
-   ;;
+  	   ;;
    $SNAKE)playerPosition=$(( $playerPosition - $dice))
          if [[ $playerPosition -lt 0 ]]
-	 		then
+	 then
          playerPosition=0
          fi
          ;;
    esac
       echo "player Position" $playerPosition "Dice count" $diceCount
-
 }
 
 function checkWin() {
@@ -59,9 +58,9 @@ function checkWin() {
       checkOption
       fi
       done
-		echo "player $player Win"
+	echo "player $player Win"
 
-	   if [[ $playerPosition == $END_POSITION ]]
+      if [[ $playerPosition == $END_POSITION ]]
       then
       echo "WIN"
       fi
